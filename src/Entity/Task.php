@@ -26,6 +26,9 @@ class Task
     #[ORM\ManyToOne(inversedBy: 'users')]
     private ?User $user = null;
 
+    #[ORM\ManyToOne(inversedBy: 'tasks')]
+    private ?User $task = null;
+
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank()]
     private ?string $description = null;
@@ -48,6 +51,12 @@ class Task
     #[Assert\NotBlank()] // qui vérifie si la propriété est vide
     #[Assert\GreaterThan('today')] // qui vérifie si la date limite est supérieure à la date courante
     private ?DateTimeImmutable $endDate;
+
+    #[ORM\ManyToOne]
+    private ?Priority $tasks = null;
+
+    #[ORM\ManyToOne(inversedBy: 'priorities')]
+    private ?Priority $priorities = null;
 
     public function __construct()
     {
@@ -128,6 +137,42 @@ class Task
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getTask(): ?User
+    {
+        return $this->task;
+    }
+
+    public function setTask(?User $task): self
+    {
+        $this->task = $task;
+
+        return $this;
+    }
+
+    public function getTasks(): ?Priority
+    {
+        return $this->tasks;
+    }
+
+    public function setTasks(?Priority $tasks): self
+    {
+        $this->tasks = $tasks;
+
+        return $this;
+    }
+
+    public function getPriorities(): ?Priority
+    {
+        return $this->priorities;
+    }
+
+    public function setPriorities(?Priority $priorities): self
+    {
+        $this->priorities = $priorities;
 
         return $this;
     }

@@ -9,17 +9,17 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class HomeController
+ * Class SecurityController
  *
  * @author tresor-ilunga <ilungat82@gmail.com>
  */
-class HomeController extends AbstractController
+class SecurityController extends AbstractController
 {
-    #[Route('', name: 'app_home',  methods: ['GET'])]
+    #[Route('/security', name: 'app_security', methods: ['GET', 'POST'])]
     public function index(): Response
     {
-        return $this->render('pages/home/home.html.twig', [
-            'controller_name' => 'HomeController',
+        return $this->render('pages/security/login.html.twig', [
+            'controller_name' => 'SecurityController',
         ]);
     }
 }

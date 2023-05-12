@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Repository\PriorityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -28,6 +30,14 @@ class Priority
     #[ORM\Column]
     #[Assert\NotBlank()]
     private ?int $value = null;
+
+    #[ORM\OneToMany(mappedBy: 'priorities', targetEntity: Task::class)]
+    private Collection $priorities;
+
+    public function __construct()
+    {
+        $this->priorities = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -61,5 +71,35 @@ class Priority
     public function __toString(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @return Collection<int, Task>
+     */
+    public function getPriorities(): Collection
+    {
+        return $this->priorities;
+    }
+
+    public function addPriority(Task $priority): self
+    {
+        if (!$this->priorities->contains($priority)) {
+            $this->priorities->add($priority);
+            $priority->setPriorities($this);
+        }
+
+        return $this;
+    }
+
+    public function removePriority(Task $priority): self
+    {
+        if ($this->priorities->removeElement($priority)) {
+            // set the owning side to null (unless already changed)
+            if ($priority->getPriorities() === $this) {
+                $priority->setPriorities(null);
+            }
+        }
+
+        return $this;
     }
 }

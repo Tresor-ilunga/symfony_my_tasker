@@ -23,12 +23,22 @@ class Task
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\ManyToOne(inversedBy: 'users')]
+    private ?User $user = null;
+
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank()]
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()]
+    #[Assert\Choice(['high','medium', 'low'])]
     private ?string $priority = null;
+
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()] // qui vérifie si la propriété est vide
+    #[Assert\Choice(['todo','inprogress', 'done'])] // ui vérifie si la propriété est l'une des valeurs autorisées
+    private ?string $state = null;
 
     #[ORM\Column]
     #[Assert\NotBlank()]
@@ -74,6 +84,18 @@ class Task
         return $this;
     }
 
+    public function getState(): ?string
+    {
+        return $this->state;
+    }
+
+    public function setState(string $state): self
+    {
+        $this->state = $state;
+
+        return $this;
+    }
+
     public function getCreatedAt(): ?DateTimeImmutable
     {
         return $this->created_at;
@@ -97,4 +119,17 @@ class Task
 
         return $this;
     }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
 }

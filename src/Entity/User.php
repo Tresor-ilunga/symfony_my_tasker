@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -25,6 +27,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Task::class)]
+    private Collection $users;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank()]
@@ -50,6 +55,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     #[Assert\NotBlank()]
     private ?string $password = null;
+
+    public function __construct()
+    {
+        $this->users = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -160,6 +170,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __toString(): string
     {
         return $this->name . ' ' . $this->firstname;
+    }
+
+    /**
+     * @return Collection<int, Task>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(Task $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+            $user->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(Task $user): self
+    {
+        if ($this->users->removeElement($user)) {
+            // set the owning side to null (unless already changed)
+            if ($user->getUser() === $this) {
+                $user->setUser(null);
+            }
+        }
+
+        return $this;
     }
 
 }

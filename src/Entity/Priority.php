@@ -31,14 +31,6 @@ class Priority
     #[Assert\NotBlank()]
     private ?int $value = null;
 
-    #[ORM\OneToMany(mappedBy: 'priorities', targetEntity: Task::class)]
-    private Collection $priorities;
-
-    public function __construct()
-    {
-        $this->priorities = new ArrayCollection();
-    }
-
     public function getId(): ?int
     {
         return $this->id;
@@ -71,35 +63,5 @@ class Priority
     public function __toString(): string
     {
         return $this->name;
-    }
-
-    /**
-     * @return Collection<int, Task>
-     */
-    public function getPriorities(): Collection
-    {
-        return $this->priorities;
-    }
-
-    public function addPriority(Task $priority): self
-    {
-        if (!$this->priorities->contains($priority)) {
-            $this->priorities->add($priority);
-            $priority->setPriorities($this);
-        }
-
-        return $this;
-    }
-
-    public function removePriority(Task $priority): self
-    {
-        if ($this->priorities->removeElement($priority)) {
-            // set the owning side to null (unless already changed)
-            if ($priority->getPriorities() === $this) {
-                $priority->setPriorities(null);
-            }
-        }
-
-        return $this;
     }
 }

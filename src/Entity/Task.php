@@ -15,6 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @author tresor-ilunga <ilungat82@gmail.com>
  */
+
 #[ORM\Entity(repositoryClass: TaskRepository::class)]
 class Task
 {
@@ -30,7 +31,7 @@ class Task
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank()]
     #[Assert\Choice(['high','medium', 'low'])]
-    private ?string $priority = null;
+    private ?string $priorities = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank()] // qui vérifie si la propriété est vide
@@ -39,12 +40,11 @@ class Task
 
     #[ORM\Column]
     #[Assert\NotBlank()]
-    private ?DateTimeImmutable $created_at;
+    private ?DateTimeImmutable $created_at = null;
 
     #[ORM\Column]
-    #[Assert\NotBlank()] // qui vérifie si la propriété est vide
-    #[Assert\GreaterThan('today')] // qui vérifie si la date limite est supérieure à la date courante
-    private ?DateTimeImmutable $endDate;
+    #[Assert\NotBlank()]
+    private ?DateTimeImmutable $endDate = null;
 
     public function __construct()
     {
@@ -69,14 +69,14 @@ class Task
         return $this;
     }
 
-    public function getPriority(): ?string
+    public function getPriorities(): ?string
     {
-        return $this->priority;
+        return $this->priorities;
     }
 
-    public function setPriority(string $priority): self
+    public function setPriorities(string $priorities): self
     {
-        $this->priority = $priority;
+        $this->priorities = $priorities;
 
         return $this;
     }

@@ -3,12 +3,12 @@ version: '3'
 services:
   database:
     image: mariadb:10.7.3
-    container_name: my-tasker-database
+    container_name: symfony_tasker_database
     restart: unless-stopped
     environment:
       MARIADB_USER: root
       MARIADB_ROOT_PASSWORD: root
-      MARIADB_DATABASE: my-tasker
+      MARIADB_DATABASE: symfony
       MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: 'no'
     volumes:
       - database-data:/var/lib/mysql:rw

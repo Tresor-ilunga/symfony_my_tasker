@@ -15,6 +15,11 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class HomeController extends AbstractController
 {
+    /**
+     * This method is used to display the home page
+     *
+     * @return Response
+     */
     #[Route('', name: 'app_home',  methods: ['GET'])]
     public function index(): Response
     {

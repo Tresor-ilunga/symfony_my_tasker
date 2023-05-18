@@ -6,11 +6,12 @@ namespace App\Form;
 
 use App\Entity\Priority;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class PriorityType
@@ -25,12 +26,24 @@ class PriorityType extends AbstractType
             ->add('name', TextType::class, [
                 'label' => 'Nom'
             ])
-            ->add('value', IntegerType::class, [
-                'label' => 'Valeur'
+            ->add('value', ChoiceType::class, [
+                'label' => 'Valeur',
+                'choices' => [
+                    'Basse' => 1,
+                    'Moyenne' => 2,
+                    'Haute' => 3,
+                ],
+                'constraints' => [
+                    new Assert\NotBlank(),
+                    new Assert\Length([
+                        'min' => 1,
+                        'max' => 3
+                    ])
+                ]
             ])
             ->add('submit', SubmitType::class, [
-                'label' => 'Enregistrer'
-            ]);
+            'label' => 'Enregistrer'
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

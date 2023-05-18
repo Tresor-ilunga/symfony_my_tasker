@@ -1,30 +1,24 @@
 # MyTasker
 
-MyTasker est une application de gestion de tâches qui permet à l'utilisateur de créer, organiser et suivre les tâches à accomplir. L'application offre une expérience utilisateur simple et efficace pour la gestion quotidienne de tâches.
+MyTasker is a task management application that allows the user to create, organize and track tasks. The application offers a simple and efficient user experience for daily task management.
 
-## Environnement de développement
+## Environment of development
 
-### Pré-requis
+### Pre-requisite
 
 * PHP 8.1
 * Composer
 * Symfony CLI
-* Docker et Docker-compose
+* Docker and Docker-compose
 
-Vous pouvez vérifier les pré-requis (sauf Docker et Docker-compose) avec la commande suivante (de la CLI Symfony) : 
+You can check the prerequisites (except Docker and Docker-compose) with the following command (from the Symfony CLI):
 
 ```bash
 symfony check:requirements
 ```
 
-### Lancer l'environnement de développement
+### Start the development environment
 
 ```bash
 docker-compose up -d
-```
-
-## Lancer des tests
-
-```bash
-php bin/phpunit --testdox
 ```

@@ -6,14 +6,17 @@ namespace App\Entity;
 
 use App\Repository\PriorityRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Priority
  *
+ *
  * @author tresor-ilunga <ilungat82@gmail.com>
  */
 #[ORM\Entity(repositoryClass: PriorityRepository::class)]
+#[UniqueEntity('name')]
 class Priority
 {
     #[ORM\Id]
@@ -27,6 +30,7 @@ class Priority
 
     #[ORM\Column]
     #[Assert\NotBlank()]
+    #[Assert\Length(min: 1, max: 3)]
     private ?int $value = null;
 
     public function getId(): ?int

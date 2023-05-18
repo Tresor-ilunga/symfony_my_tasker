@@ -21,6 +21,13 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class PriorityController extends AbstractController
 {
+
+    /**
+     * This method is used to display the list of priorities
+     *
+     * @param PriorityRepository $repository
+     * @return Response
+     */
     #[Route('/priority', name: 'app_priority', methods: ['GET', 'POST'])]
     public function index(PriorityRepository $repository): Response
     {
@@ -31,6 +38,13 @@ class PriorityController extends AbstractController
         ]);
     }
 
+    /**
+     * This method is used to create a new priority
+     *
+     * @param Request $request
+     * @param EntityManagerInterface $manager
+     * @return Response
+     */
     #[Route('/priority/new', name: 'app_priority_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $manager): Response
     {
@@ -56,6 +70,14 @@ class PriorityController extends AbstractController
         ]);
     }
 
+    /**
+     * This method is used to edit a priority
+     *
+     * @param Request $request
+     * @param Priority $priority
+     * @param EntityManagerInterface $manager
+     * @return Response
+     */
     public function edit(Request $request, Priority $priority, EntityManagerInterface $manager): Response
     {
         $form = $this->createForm(PriorityType::class, $priority);
@@ -80,6 +102,13 @@ class PriorityController extends AbstractController
         ]);
     }
 
+    /**
+     * This method is used to delete a priority
+     *
+     * @param EntityManagerInterface $manager
+     * @param Task $task
+     * @return Response
+     */
     public function delete(EntityManagerInterface $manager, Task $task): Response
     {
         $manager->remove($task);

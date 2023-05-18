@@ -27,6 +27,7 @@ class Task
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]

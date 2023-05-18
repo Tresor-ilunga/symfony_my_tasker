@@ -10,11 +10,11 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20230514202137 extends AbstractMigration
+final class Version20230518093400 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return 'Create priority table';
+        return 'creation de la table priority';
     }
 
     public function up(Schema $schema): void

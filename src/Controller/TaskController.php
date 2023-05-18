@@ -20,6 +20,13 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class TaskController extends AbstractController
 {
+
+    /**
+     * This method is used to display the list of tasks
+     *
+     * @param TaskRepository $repository
+     * @return Response
+     */
     #[Route('/task', name: 'app_task', methods: ['GET', 'POST'])]
     public function index(TaskRepository $repository): Response
     {
@@ -29,6 +36,13 @@ class TaskController extends AbstractController
         ]);
     }
 
+    /**
+     * This method is used to create a new task
+     *
+     * @param Request $request
+     * @param EntityManagerInterface $manager
+     * @return Response
+     */
     #[Route('/task/new', name: 'app_task_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $manager): Response
     {
@@ -53,6 +67,14 @@ class TaskController extends AbstractController
         ]);
     }
 
+    /**
+     * This method is used to edit a task
+     *
+     * @param Task $task
+     * @param EntityManagerInterface $manager
+     * @param Request $request
+     * @return Response
+     */
     #[Route('/task/edit/{id}', name: 'app_task_edit', methods: ['GET', 'POST'])]
     public function edit(Task $task, EntityManagerInterface $manager, Request $request): Response
     {
@@ -76,6 +98,13 @@ class TaskController extends AbstractController
         ]);
     }
 
+    /**
+     * This method is used to delete a task
+     *
+     * @param EntityManagerInterface $manager
+     * @param Task $task
+     * @return Response
+     */
     #[Route('/task/delete/{id}', name: 'app_task_delete', methods: ['GET', 'POST'])]
     public function delete(EntityManagerInterface $manager, Task $task): Response
     {

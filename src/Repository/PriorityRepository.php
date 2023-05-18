@@ -9,8 +9,6 @@ use Doctrine\Persistence\ManagerRegistry;
 /**
  * @extends ServiceEntityRepository<Priority>
  *
- * @author tresor-ilunga <ilungat82@gmail.com>
- *
  * @method Priority|null find($id, $lockMode = null, $lockVersion = null)
  * @method Priority|null findOneBy(array $criteria, array $orderBy = null)
  * @method Priority[]    findAll()
@@ -40,5 +38,4 @@ class PriorityRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-
 }

@@ -8,6 +8,7 @@ use App\Entity\Task;
 use App\Form\TaskType;
 use App\Repository\TaskRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,17 +23,22 @@ class TaskController extends AbstractController
 {
 
     /**
-     * This method is used to display the list of tasks
+     * This method is used to display all tasks
      *
      * @param TaskRepository $repository
+     * @param PaginatorInterface $paginator
+     * @param Request $request
      * @return Response
      */
     #[Route('/task', name: 'app_task', methods: ['GET', 'POST'])]
-    public function index(TaskRepository $repository): Response
+    public function index(TaskRepository $repository, PaginatorInterface $paginator, Request $request): Response
     {
-
-        return $this->render('pages/task/task.html.twig', [
-            'tasks' =>$repository->findAll()
+        return $this->render('pages/task/index.html.twig', [
+            'tasks' => $paginator->paginate(
+                $repository->findAll(),
+                $request->query->getInt('page', 1),
+                10
+            )
         ]);
     }
 

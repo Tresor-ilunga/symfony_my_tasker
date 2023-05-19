@@ -32,7 +32,7 @@ class AppFixtures extends Fixture
     {
 
         // Priorities
-        for ($i = 0; $i < 50; $i++)
+        for ($i = 0; $i < 20; $i++)
         {
             $priority = new Priority();
             $priority->setName($this->faker->word())
@@ -42,7 +42,7 @@ class AppFixtures extends Fixture
         }
 
         // Tasks
-        for ($i = 0; $i < 50; $i++)
+        for ($i = 0; $i < 20; $i++)
         {
             $task = new Task();
             $task->setTitle($this->faker->sentence())

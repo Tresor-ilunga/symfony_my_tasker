@@ -9,6 +9,7 @@ use App\Entity\Task;
 use App\Form\PriorityType;
 use App\Repository\PriorityRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,16 +27,22 @@ class PriorityController extends AbstractController
      * This method is used to display the list of priorities
      *
      * @param PriorityRepository $repository
+     * @param PaginatorInterface $paginator
+     * @param Request $request
      * @return Response
      */
     #[Route('/priority', name: 'app_priority', methods: ['GET', 'POST'])]
-    public function index(PriorityRepository $repository): Response
+    public function index(PriorityRepository $repository, PaginatorInterface $paginator, Request $request): Response
     {
-        $priorities = $repository->findAll();
-
-        return $this->render('pages/priority/index.html.twig', [
-            'priorities' => $priorities,
-        ]);
+        return $this->render('pages/priority/index.html.twig',
+            parameters: [
+                'priorities' => $paginator->paginate(
+                    target: $repository->findAll(),
+                    page: $request->query->getInt('page', 1),
+                    limit: 10
+                )
+            ]
+        );
     }
 
     /**

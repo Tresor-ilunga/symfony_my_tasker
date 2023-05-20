@@ -33,13 +33,15 @@ class TaskController extends AbstractController
     #[Route('/task', name: 'app_task', methods: ['GET', 'POST'])]
     public function index(TaskRepository $repository, PaginatorInterface $paginator, Request $request): Response
     {
-        return $this->render('pages/task/index.html.twig', [
-            'tasks' => $paginator->paginate(
-                $repository->findAll(),
-                $request->query->getInt('page', 1),
-                10
-            )
-        ]);
+        return $this->render('pages/task/index.html.twig',
+            parameters: [
+                'task' => $paginator->paginate(
+                    target: $repository->findAll(),
+                    page: $request->query->getInt('page', 1),
+                    limit: 10
+                )
+            ]
+        );
     }
 
     /**
@@ -102,6 +104,17 @@ class TaskController extends AbstractController
         return $this->render('pages/task/edit.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     *  This method is used to show a task
+     *
+     * @return Response
+     */
+    #[Route('/task/show/{id}', name: 'app_task_show', methods: ['GET'])]
+    public function show(): Response
+    {
+        return $this->render('pages/task/show.html.twig');
     }
 
     /**

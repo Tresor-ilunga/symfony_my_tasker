@@ -1,4 +1,4 @@
-{% if task is defined and task | length > 0 %}
+{% if priorities is defined and priorities | length > 0 %}
     <div class="card card-stretch">
         <div class="card-inner-group">
             <div class="card-inner">
@@ -31,8 +31,8 @@
             </div>
             <div class="card-inner d-flex justify-content-center">
                 {% block list_card_pagination %}
-                    {% if task is defined %}
-                        {{ knp_pagination_render(task, 'component/_pagination.html.twig') }}
+                    {% if priorities is defined %}
+                        {{ knp_pagination_render(priorities, 'component/_pagination.html.twig') }}
                     {% endif %}
                 {% endblock %}
             </div>

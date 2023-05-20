@@ -1,0 +1,49 @@
+{% extends 'layout/base.html.twig' %}
+{% block title "Toutes les taches" %}
+
+{% block header %}
+    {% embed 'component/_header.html.twig' %}
+        {% block header_title "Toutes les tâches" %}
+        {% block header_action_list %}
+            <li>
+                <a href="{{ path('app_task_new') }}" class="btn btn-white btn-dim btn-outline-light">
+                    <span>Ajouter</span>
+                </a>
+            </li>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block content %}
+    {% embed 'component/_list.html.twig' with {_action: 'ajouter une taches', _path: path('app_task_new')} %}
+        {% block list_card_table_head %}
+            <th>Titre</th>
+            <th>Description</th>
+            <th>Priorité</th>
+            <th>Status</th>
+            <th>&nbsp;</th>
+        {% endblock %}
+        {% block list_card_table_body %}
+            {% for row in task %}
+                <tr>
+                    <td>
+                        <a href="#" target="_blank">
+
+                        </a>
+                        {{ row.title }}
+                    </td>
+                    <td>{{ row.description | u.truncate(100, '...') }}</td>
+                    <td>{{ row.priorities }}</td>
+                    <td>{{ row.state }}</td>
+                    <td class="tb-odr-action">
+                        <div class="tb-odr-btns d-none d-md-inline">
+                            {#{ <a href="{{ path('app_task_show', {id: row.id}) }}" class="text-soft btn btn-icon btn-trigger" title="">
+                              { 'eye-alt-fill' | icon }} voir
+                            </a>#}
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

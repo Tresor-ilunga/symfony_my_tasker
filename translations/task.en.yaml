@@ -1,0 +1,4 @@
+task.forms.label.titre: Title
+task.forms.label.description: Description
+task.forms.label.priority: Priorities
+task.forms.label.state: State

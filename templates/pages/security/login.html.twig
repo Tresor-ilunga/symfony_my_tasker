@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'layout/base.html.twig' %}
 
 {% block title %}Login{% endblock %}
 
@@ -16,7 +16,7 @@
         <input type="password" id="password" name="_password">
 
         {# If you want to control the URL the user is redirected to on success
-        <input type="hidden" name="_target_path" value="/account"> #}
+    <input type="hidden" name="_target_path" value="/account"> #}
 
         <button type="submit">login</button>
     </form>

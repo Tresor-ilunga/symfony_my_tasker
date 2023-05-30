@@ -46,12 +46,12 @@ class Task
 
     #[ORM\Column]
     #[Assert\NotBlank()]
-    private ?DateTimeImmutable $created_at = null;
+    private ?DateTimeImmutable $created_at;
 
     #[ORM\Column]
     #[Assert\NotBlank()]
-    #[Assert\GreaterThan("today")]
-    private ?DateTimeImmutable $endDate = null;
+    //#[Assert\GreaterThan("today")]
+    private ?DateTimeImmutable $endDate;
 
     public function __construct()
     {

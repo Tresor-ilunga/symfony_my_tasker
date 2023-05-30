@@ -1,6 +1,31 @@
 {% extends 'layout/base.html.twig' %}
-{% block title "édition de la priorité" %}
+{% block title "création de la priorite" %}
+
+{% block header %}
+    {% embed 'component/_header.html.twig' %}
+        {% block header_title "Création de la priorite" %}
+        {% block header_action_list %}
+            <li>
+                <a href="{{ path('app_priority') }}" class="btn btn-white btn-dim btn-outline-light">
+                    <span>toutes les priorités</span>
+                </a>
+            </li>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
 
 {% block content %}
-    <h1>Hello world</h1>
+    {% embed "component/_card.html.twig" %}
+        {% block card_body %}
+            {{ form_start(form) }}
+            {{ form_rest(form) }}
+            {#
+            <button class="mt-3 btn btn-primary">
+                {{ 'save-fill' | icon }}
+                <span>Envoyer</span>
+            </button>
+            #}
+            {{ form_end(form) }}
+        {% endblock %}
+    {% endembed %}
 {% endblock %}

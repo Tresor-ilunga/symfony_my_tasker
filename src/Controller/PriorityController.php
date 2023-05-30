@@ -85,7 +85,7 @@ class PriorityController extends AbstractController
      * @param EntityManagerInterface $manager
      * @return Response
      */
-    #[Route('/priority/{id}/edit', name: 'app_priority_edit', methods: ['GET', 'POST'])]
+    #[Route('/priority/edit/{id}', name: 'app_priority_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Priority $priority, EntityManagerInterface $manager): Response
     {
         $form = $this->createForm(PriorityType::class, $priority);
@@ -117,7 +117,7 @@ class PriorityController extends AbstractController
      * @param Task $task
      * @return Response
      */
-    #[Route('/priority/{id}/delete', name: 'app_priority_delete', methods: ['POST'])]
+    #[Route('/priority/delete/{id}', name: 'app_priority_delete', methods: ['POST'])]
     public function delete(EntityManagerInterface $manager, Task $task): Response
     {
         $manager->remove($task);

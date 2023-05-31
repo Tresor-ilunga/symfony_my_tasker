@@ -6,6 +6,8 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use DateTimeImmutable;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -28,6 +30,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Task::class, orphanRemoval: true)]
+    private Collection $tasks;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank()]
@@ -60,10 +65,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotNull()]
     private ?DateTimeImmutable $updatedAt;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Priority::class, orphanRemoval: true)]
+    private Collection $priorities;
+
     public function __construct()
     {
         $this->createdAt = new DateTimeImmutable();
         $this->updatedAt = new DateTimeImmutable();
+        $this->tasks = new ArrayCollection();
+        $this->priorities = new ArrayCollection();
     }
 
     #[ORM\PreUpdate]
@@ -187,6 +197,66 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getUserIdentifier(): string
     {
         return $this->email;
+    }
+
+    /**
+     * @return Collection<int, Task>
+     */
+    public function getTasks(): Collection
+    {
+        return $this->tasks;
+    }
+
+    public function addTask(Task $task): self
+    {
+        if (!$this->tasks->contains($task)) {
+            $this->tasks->add($task);
+            $task->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTask(Task $task): self
+    {
+        if ($this->tasks->removeElement($task)) {
+            // set the owning side to null (unless already changed)
+            if ($task->getUser() === $this) {
+                $task->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Priority>
+     */
+    public function getPriorities(): Collection
+    {
+        return $this->priorities;
+    }
+
+    public function addPriority(Priority $priority): self
+    {
+        if (!$this->priorities->contains($priority)) {
+            $this->priorities->add($priority);
+            $priority->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePriority(Priority $priority): self
+    {
+        if ($this->priorities->removeElement($priority)) {
+            // set the owning side to null (unless already changed)
+            if ($priority->getUser() === $this) {
+                $priority->setUser(null);
+            }
+        }
+
+        return $this;
     }
 
 }

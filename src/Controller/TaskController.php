@@ -36,7 +36,7 @@ class TaskController extends AbstractController
         return $this->render('pages/task/index.html.twig',
             parameters: [
                 'task' => $paginator->paginate(
-                    target: $repository->findAll(),
+                    target: $repository->findBy(['user' => $this->getUser()]),
                     page: $request->query->getInt('page', 1),
                     limit: 10
                 )
@@ -61,6 +61,7 @@ class TaskController extends AbstractController
         if ($form->isSubmitted() && $form->isValid())
         {
             $task = $form->getData();
+            $task->setUser($this->getUser());
 
             $manager->persist($task);
             $manager->flush();

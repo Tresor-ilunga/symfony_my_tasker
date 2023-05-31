@@ -37,7 +37,7 @@ class PriorityController extends AbstractController
         return $this->render('pages/priority/index.html.twig',
             parameters: [
                 'priorities' => $paginator->paginate(
-                    target: $repository->findAll(),
+                    target: $repository->findBy(['user' => $this->getUser()]),
                     page: $request->query->getInt('page', 1),
                     limit: 10
                 )
@@ -62,6 +62,7 @@ class PriorityController extends AbstractController
         if ($form->isSubmitted() && $form->isValid())
         {
             $priority = $form->getData();
+            $priority->setUser($this->getUser());
 
             $manager->persist($priority);
             $manager->flush();

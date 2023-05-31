@@ -6,6 +6,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Priority;
 use App\Entity\Task;
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
@@ -30,26 +31,57 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
+        // user
+        $users = [];
+
+        $admin = new User();
+        $admin->setName('Admin')
+            ->setFirstname('Admin01')
+            ->setEmail('admin@admin.com')
+            ->setRoles(['ROLE_USER', 'ROLE_ADMIN'])
+            ->setPlainPassword('password');
+
+        $users[] = $admin;
+        $manager->persist($admin);
+
+        for ($i = 0; $i < 9; $i++)
+        {
+            $user = new User();
+            $user->setName($this->faker->name())
+                ->setFirstname($this->faker->firstName)
+                ->setEmail($this->faker->email())
+                ->setRoles(['ROLE_USER'])
+                ->setPlainPassword('password');
+
+            $users[] = $user;
+            $manager->persist($user);
+        }
+
 
         // Priorities
         for ($i = 0; $i < 20; $i++)
         {
             $priority = new Priority();
             $priority->setName($this->faker->word())
-                ->setValue($this->faker->numberBetween(1, 3));
+                ->setValue($this->faker->numberBetween(1, 3))
+                ->setUser($users[mt_rand(0, count($users) - 1)]);
 
             $manager->persist($priority);
         }
 
         // Tasks
+        $tasks = [];
+
         for ($i = 0; $i < 20; $i++)
         {
             $task = new Task();
             $task->setTitle($this->faker->sentence())
                 ->setDescription($this->faker->text())
                 ->setPriorities($this->faker->randomElement(['high', 'medium', 'low']))
-                ->setState($this->faker->randomElement(['todo', 'inprogress', 'done']));
+                ->setState($this->faker->randomElement(['todo', 'inprogress', 'done']))
+                ->setUser($users[mt_rand(0, count($users) - 1)]);
 
+            $tasks[] = $task;
             $manager->persist($task);
 
         }

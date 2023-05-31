@@ -33,6 +33,10 @@ class Priority
     #[Assert\Length(min: 1, max: 3)]
     private ?int $value = null;
 
+    #[ORM\ManyToOne(inversedBy: 'priorities')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -65,5 +69,17 @@ class Priority
     public function __toString(): string
     {
         return $this->name;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
     }
 }

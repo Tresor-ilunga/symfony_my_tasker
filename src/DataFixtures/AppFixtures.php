@@ -31,12 +31,13 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        // user
+
+        // Users
         $users = [];
 
         $admin = new User();
         $admin->setName('Admin')
-            ->setFirstname('Admin01')
+            ->setFirstname(mt_rand(0, 1) === 1 ? $this->faker->firstName() : null)
             ->setEmail('admin@admin.com')
             ->setRoles(['ROLE_USER', 'ROLE_ADMIN'])
             ->setPlainPassword('password');
@@ -44,11 +45,11 @@ class AppFixtures extends Fixture
         $users[] = $admin;
         $manager->persist($admin);
 
-        for ($i = 0; $i < 9; $i++)
+        for ($i = 0; $i <10; $i++)
         {
             $user = new User();
             $user->setName($this->faker->name())
-                ->setFirstname($this->faker->firstName)
+                ->setFirstname(mt_rand(0, 1) === 1 ? $this->faker->firstName() : null)
                 ->setEmail($this->faker->email())
                 ->setRoles(['ROLE_USER'])
                 ->setPlainPassword('password');
@@ -56,7 +57,6 @@ class AppFixtures extends Fixture
             $users[] = $user;
             $manager->persist($user);
         }
-
 
         // Priorities
         for ($i = 0; $i < 20; $i++)

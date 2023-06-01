@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * @author tresor-ilunga <ilungat82@gmail.com>
  */
-class HomeController extends AbstractController
+final class HomeController extends AbstractController
 {
     /**
      * This method is used to display the home page

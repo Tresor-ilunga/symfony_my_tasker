@@ -44,6 +44,10 @@ class Task
     #[Assert\Choice(['todo','inprogress', 'done'])] // ui vérifie si la propriété est l'une des valeurs autorisées
     private ?string $state = null;
 
+    #[ORM\ManyToOne(inversedBy: 'tasks')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+
     #[ORM\Column]
     #[Assert\NotBlank()]
     private ?DateTimeImmutable $created_at;
@@ -139,5 +143,17 @@ class Task
     public function __toString(): string
     {
         return $this->description;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
     }
 }

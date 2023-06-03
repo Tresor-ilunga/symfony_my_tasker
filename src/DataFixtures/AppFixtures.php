@@ -32,6 +32,17 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         // Users
+        $admin = new User();
+        $admin->setFullName('Admin')
+            ->setPseudo(null)
+            ->setEmail('admin@admin.com')
+            ->setRoles(['ROLE_USER', 'ROLE_ADMIN'])
+            ->setPlainPassword('password');
+
+        $users[] = $admin;
+        $manager->persist($admin);
+
+        $users = [];
         for ($i = 0; $i < 10; $i++)
         {
             $user = new User();
@@ -41,6 +52,7 @@ class AppFixtures extends Fixture
                 ->setRoles(['ROLE_USER'])
                 ->setPlainPassword('password');
 
+            $users[] = $user;
             $manager->persist($user);
         }
 
@@ -49,14 +61,14 @@ class AppFixtures extends Fixture
         {
             $priority = new Priority();
             $priority->setName($this->faker->word())
-                ->setValue($this->faker->numberBetween(1, 3));
-                //->setUser($users[mt_rand(0, count($users) - 1)]);
+                ->setValue($this->faker->numberBetween(1, 3))
+                ->setUser($users[mt_rand(0, count($users) - 1)]);
 
             $manager->persist($priority);
         }
 
         // Tasks
-        //$tasks = [];
+        $tasks = [];
 
         for ($i = 0; $i < 20; $i++)
         {
@@ -64,10 +76,10 @@ class AppFixtures extends Fixture
             $task->setTitle($this->faker->sentence())
                 ->setDescription($this->faker->text())
                 ->setPriorities($this->faker->randomElement(['high', 'medium', 'low']))
-                ->setState($this->faker->randomElement(['todo', 'inprogress', 'done']));
-               // ->setUser($users[mt_rand(0, count($users) - 1)]);
+                ->setState($this->faker->randomElement(['todo', 'inprogress', 'done']))
+                ->setUser($users[mt_rand(0, count($users) - 1)]);
 
-           // $tasks[] = $task;
+            $tasks[] = $task;
             $manager->persist($task);
 
         }

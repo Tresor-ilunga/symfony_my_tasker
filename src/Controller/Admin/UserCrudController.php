@@ -40,8 +40,8 @@ class UserCrudController extends AbstractCrudController
         return [
             IdField::new('id')
                 ->hideOnForm(),
-            TextField::new('name'),
-            TextField::new('firstname'),
+            TextField::new('fullName'),
+            TextField::new('pseudo'),
             TextField::new('email')
                 ->hideOnForm()
                 ->setFormTypeOption('disabled', 'disabled'),

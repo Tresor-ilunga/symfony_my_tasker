@@ -53,10 +53,6 @@ class Task
     //#[Assert\GreaterThan("today")]
     private ?DateTimeImmutable $endDate;
 
-    #[ORM\ManyToOne(inversedBy: 'tasks')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $user = null;
-
     public function __construct()
     {
         $this->created_at = new DateTimeImmutable();
@@ -143,17 +139,5 @@ class Task
     public function __toString(): string
     {
         return $this->description;
-    }
-
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): self
-    {
-        $this->user = $user;
-
-        return $this;
     }
 }

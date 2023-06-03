@@ -44,41 +44,10 @@ class SecurityController extends AbstractController
      *
      * @throws Exception
      */
-    #[Route('/logout', name: 'security_logout', methods: ['GET', 'POST'])]
+    #[Route('/logout', name: 'security_logout')]
     public function logout(): void
     {
         throw new Exception('Don\'t forget to activate logout in security.yaml');
     }
 
-
-    /**
-     * This method allows to register a new user
-     *
-     * @param Request $request
-     * @param EntityManagerInterface $manager
-     * @return Response
-     */
-    #[Route('/register', name: 'security.register', methods: ['GET', 'POST'])]
-    public function Registration(Request $request, EntityManagerInterface $manager): Response
-    {
-        $user = new User();
-        $form = $this->createForm(RegistrationType::class, $user);
-
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid())
-        {
-            $user = $form->getData();
-
-            $manager->persist($user);
-            $manager->flush();
-
-            $this->addFlash('success', 'Votre compte a bien été créé.');
-
-            return $this->redirectToRoute('security_login');
-        }
-
-        return $this->render('pages/security/registration.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
 }

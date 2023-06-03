@@ -6,6 +6,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Priority;
 use App\Entity\Task;
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
@@ -30,6 +31,18 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
+        // Users
+        for ($i = 0; $i < 10; $i++)
+        {
+            $user = new User();
+            $user->setFullName($this->faker->name())
+                ->setPseudo(mt_rand(0, 1) ? $this->faker->firstName() : null)
+                ->setEmail($this->faker->email())
+                ->setRoles(['ROLE_USER'])
+                ->setPlainPassword('password');
+
+            $manager->persist($user);
+        }
 
         // Priorities
         for ($i = 0; $i < 20; $i++)

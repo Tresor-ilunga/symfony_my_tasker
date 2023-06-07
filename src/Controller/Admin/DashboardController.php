@@ -22,6 +22,12 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
  */
 class DashboardController extends AbstractDashboardController
 {
+
+    /**
+     * This method is called for each page that is secured and whose URL starts
+     *
+     * @return Response
+     */
     #[Route('/admin', name: 'admin')]
     #[IsGranted('ROLE_ADMIN')]
     public function index(): Response
@@ -29,6 +35,11 @@ class DashboardController extends AbstractDashboardController
         return $this->render('admin/dashboard.html.twig');
     }
 
+    /**
+     * This method is called for each page that EasyAdmin renders (including)
+     *
+     * @return Dashboard
+     */
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
@@ -36,6 +47,11 @@ class DashboardController extends AbstractDashboardController
             ->renderContentMaximized();
     }
 
+    /**
+     * This method is called for each page that EasyAdmin renders (including)
+     *
+     * @return iterable
+     */
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');

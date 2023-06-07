@@ -12,11 +12,22 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class TaskCrudController extends AbstractCrudController
 {
+    /**
+     * This method returns the FQCN of the entity associated with this CRUD controller
+     *
+     * @return string
+     */
     public static function getEntityFqcn(): string
     {
         return Task::class;
     }
 
+    /**
+     * This method configures the CRUD operations associated with this CRUD controller
+     *
+     * @param Crud $crud
+     * @return Crud
+     */
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
@@ -26,6 +37,12 @@ class TaskCrudController extends AbstractCrudController
     }
 
 
+    /**
+     * This method configures the fields of the CRUD for the entity associated with this CRUD controller
+     *
+     * @param string $pageName
+     * @return iterable
+     */
     public function configureFields(string $pageName): iterable
     {
         return [

@@ -21,11 +21,22 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
  */
 class UserCrudController extends AbstractCrudController
 {
+    /**
+     * This method returns the FQCN of the entity associated with this CRUD controller
+     *
+     * @return string
+     */
     public static function getEntityFqcn(): string
     {
         return User::class;
     }
 
+    /**
+     * This method configures the CRUD operations to be displayed and executed
+     *
+     * @param Crud $crud
+     * @return Crud
+     */
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
@@ -35,13 +46,18 @@ class UserCrudController extends AbstractCrudController
     }
 
 
+    /**
+     * This method configures the fields of the CRUD for the given page name
+     *
+     * @param string $pageName
+     * @return iterable
+     */
     public function configureFields(string $pageName): iterable
     {
         return [
             IdField::new('id')
                 ->hideOnForm(),
-            TextField::new('fullName'),
-            TextField::new('pseudo'),
+            TextField::new('name'),
             TextField::new('email')
                 ->hideOnForm()
                 ->setFormTypeOption('disabled', 'disabled'),

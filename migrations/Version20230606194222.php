@@ -10,11 +10,11 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20230603201422 extends AbstractMigration
+final class Version20230606194222 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return 'creation de la relation entre les tables priority et user';
+        return 'creation de la relation entre les entités User et Task et Priority';
     }
 
     public function up(Schema $schema): void
@@ -23,6 +23,9 @@ final class Version20230603201422 extends AbstractMigration
         $this->addSql('ALTER TABLE priority ADD user_id INT NOT NULL');
         $this->addSql('ALTER TABLE priority ADD CONSTRAINT FK_62A6DC27A76ED395 FOREIGN KEY (user_id) REFERENCES user (id)');
         $this->addSql('CREATE INDEX IDX_62A6DC27A76ED395 ON priority (user_id)');
+        $this->addSql('ALTER TABLE task ADD user_id INT NOT NULL');
+        $this->addSql('ALTER TABLE task ADD CONSTRAINT FK_527EDB25A76ED395 FOREIGN KEY (user_id) REFERENCES user (id)');
+        $this->addSql('CREATE INDEX IDX_527EDB25A76ED395 ON task (user_id)');
     }
 
     public function down(Schema $schema): void
@@ -31,5 +34,8 @@ final class Version20230603201422 extends AbstractMigration
         $this->addSql('ALTER TABLE priority DROP FOREIGN KEY FK_62A6DC27A76ED395');
         $this->addSql('DROP INDEX IDX_62A6DC27A76ED395 ON priority');
         $this->addSql('ALTER TABLE priority DROP user_id');
+        $this->addSql('ALTER TABLE task DROP FOREIGN KEY FK_527EDB25A76ED395');
+        $this->addSql('DROP INDEX IDX_527EDB25A76ED395 ON task');
+        $this->addSql('ALTER TABLE task DROP user_id');
     }
 }

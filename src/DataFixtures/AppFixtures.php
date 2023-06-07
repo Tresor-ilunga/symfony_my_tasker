@@ -33,8 +33,7 @@ class AppFixtures extends Fixture
     {
         // Users
         $admin = new User();
-        $admin->setFullName('Admin')
-            ->setPseudo(null)
+        $admin->setName('Admin')
             ->setEmail('admin@admin.com')
             ->setRoles(['ROLE_USER', 'ROLE_ADMIN'])
             ->setPlainPassword('password');
@@ -46,8 +45,7 @@ class AppFixtures extends Fixture
         for ($i = 0; $i < 10; $i++)
         {
             $user = new User();
-            $user->setFullName($this->faker->name())
-                ->setPseudo(mt_rand(0, 1) ? $this->faker->firstName() : null)
+            $user->setName($this->faker->name())
                 ->setEmail($this->faker->email())
                 ->setRoles(['ROLE_USER'])
                 ->setPlainPassword('password');

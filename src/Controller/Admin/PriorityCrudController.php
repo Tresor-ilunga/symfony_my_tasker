@@ -12,11 +12,22 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class PriorityCrudController extends AbstractCrudController
 {
+    /**
+     * This method returns the FQCN of the entity associated with this CRUD controller.
+     *
+     * @return string
+     */
     public static function getEntityFqcn(): string
     {
         return Priority::class;
     }
 
+    /**
+     * This method is used to configure the CRUD operations of the controller.
+     *
+     * @param Crud $crud
+     * @return Crud
+     */
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
@@ -28,6 +39,12 @@ class PriorityCrudController extends AbstractCrudController
     }
 
 
+    /**
+     * This method is used to configure the fields of the CRUD.
+     *
+     * @param string $pageName
+     * @return iterable
+     */
     public function configureFields(string $pageName): iterable
     {
         return [

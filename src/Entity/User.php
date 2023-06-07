@@ -33,12 +33,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 50)]
     #[Assert\NotBlank()]
     #[Assert\Length(min: 2, max: 50)]
-    private ?string $fullName = null;
-
-    #[ORM\Column(length: 50, nullable: true)]
-    #[Assert\Length(min: 2, max: 50)]
-    private ?string $pseudo = null;
-
+    private ?string $name;
 
     #[ORM\Column(length: 180, unique: true)]
     #[Assert\Length(min: 2, max: 180)]
@@ -81,26 +76,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->id;
     }
 
-    public function getFullName(): ?string
+    public function getName(): ?string
     {
-        return $this->fullName;
+        return $this->name;
     }
 
-    public function setFullName(string $fullName): self
+    public function setName(?string $name): self
     {
-        $this->fullName = $fullName;
-
-        return $this;
-    }
-
-    public function getPseudo(): ?string
-    {
-        return $this->pseudo;
-    }
-
-    public function setPseudo(?string $pseudo): self
-    {
-        $this->pseudo = $pseudo;
+        $this->name = $name;
 
         return $this;
     }
@@ -196,7 +179,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __toString(): string
     {
-        return $this->getFullName();
+        return $this->getName();
     }
 
     /**
@@ -258,4 +241,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
 }

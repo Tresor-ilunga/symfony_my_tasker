@@ -19,9 +19,8 @@
         {% block list_card_table_head %}
             <th>Nom</th>
             <th>Valeur</th>
-            <th>
-            </th>
-            <th>&nbsp;</th>
+            <th>Edition</th>
+            <th>Suppression</th>
         {% endblock %}
         {% block list_card_table_body %}
             {% for row in priorities %}
@@ -32,17 +31,16 @@
                         {{ row.name }}
                     </td>
                     <td>{{ row.value }}</td>
-                    {#
-                    <td>{{ row.description | u.truncate(100, '...') }}</td>
-                    <td>{{ row.priorities }}</td>
-                    <td>{{ row.state }}</td>
-                    #}
-                    <td class="tb-odr-action">
-                        <div class="tb-odr-btns d-none d-md-inline">
-                            {#{ <a href="{{ path('app_task_show', {id: row.id}) }}" class="text-soft btn btn-icon btn-trigger" title="">
-                              { 'eye-alt-fill' | icon }} voir
-                            </a>#}
-                        </div>
+                    <td>
+                        <a href="{{ path('app_priority_edit', {id: row.id}) }}" class="btn btn-outline-primary">
+                            <span>editer</span>
+                        </a>
+                    </td>
+
+                    <td>
+                        <a href="{{ path('app_priority_delete', {id: row.id}) }}" class="btn btn-outline-danger">
+                            <span>supprimer</span>
+                        </a>
                     </td>
                 </tr>
             {% endfor %}

@@ -50,6 +50,13 @@ class SecurityController extends AbstractController
         throw new Exception('Don\'t forget to activate logout in security.yaml');
     }
 
+    /**
+     * This method allows to register
+     *
+     * @param Request $request
+     * @param EntityManagerInterface $manager
+     * @return Response
+     */
     #[Route('/register', name: 'app_security_register', methods: ['GET', 'POST'])]
     public function register(Request $request, EntityManagerInterface $manager): Response
     {

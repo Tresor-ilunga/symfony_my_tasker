@@ -21,6 +21,8 @@
             <th>Description</th>
             <th>Priorité</th>
             <th>Status</th>
+            <th>Edition</th>
+            <th>Suppression</th>
             <th>&nbsp;</th>
         {% endblock %}
         {% block list_card_table_body %}
@@ -35,6 +37,17 @@
                     <td>{{ row.description | u.truncate(100, '...') }}</td>
                     <td>{{ row.priorities }}</td>
                     <td>{{ row.state }}</td>
+                    <td>
+                        <a href="{{ path('app_task_edit', {id: row.id}) }}" class="btn btn-outline-primary">
+                           <span>editer</span>
+                        </a>
+                    </td>
+
+                    <td>
+                        <a href="{{ path('app_task_delete', {id: row.id}) }}" class="btn btn-outline-danger">
+                            <span>supprimer</span>
+                        </a>
+                    </td>
                     <td class="tb-odr-action">
                         <div class="tb-odr-btns d-none d-md-inline">
                             {#{ <a href="{{ path('app_task_show', {id: row.id}) }}" class="text-soft btn btn-icon btn-trigger" title="">

@@ -25,25 +25,14 @@ class RegistrationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('fullName', TextType::class, [
+            ->add('name', TextType::class, [
                 'attr' => [
                     'minlength' => '2',
                     'maxlength' => '50'
                 ],
-                'label' => 'Nom / Prénom',
+                'label' => 'Nom',
                 'constraints' => [
                     new Assert\NotBlank(),
-                    new Assert\Length(['min' => 2, 'max' => 50])
-                ]
-            ])
-            ->add('pseudo', TextType::class, [
-                'attr' => [
-                    'minlength' => '2',
-                    'maxlength' => '50'
-                ],
-                'label' => 'Pseudo (Facultatif)',
-                'required' => false,
-                'constraints' => [
                     new Assert\Length(['min' => 2, 'max' => 50])
                 ]
             ])

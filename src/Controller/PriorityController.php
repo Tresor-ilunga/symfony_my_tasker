@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\Priority;
-use App\Entity\Task;
 use App\Form\PriorityType;
 use App\Repository\PriorityRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -32,6 +31,7 @@ class PriorityController extends AbstractController
      * @return Response
      */
     #[Route('/priority', name: 'app_priority', methods: ['GET', 'POST'])]
+    //#[IsGranted('ROLE_USER')]
     public function index(PriorityRepository $repository, PaginatorInterface $paginator, Request $request): Response
     {
         return $this->render('pages/priority/index.html.twig',
@@ -53,6 +53,7 @@ class PriorityController extends AbstractController
      * @return Response
      */
     #[Route('/priority/new', name: 'app_priority_new', methods: ['GET', 'POST'])]
+    //#[IsGranted('ROLE_USER')]
     public function new(Request $request, EntityManagerInterface $manager): Response
     {
         $priority = new Priority();
@@ -87,6 +88,7 @@ class PriorityController extends AbstractController
      * @return Response
      */
     #[Route('/priority/edit/{id}', name: 'app_priority_edit', methods: ['GET', 'POST'])]
+    //#[Security("is_granted('ROLE_USER') and user === task.getUser()")]
     public function edit(Request $request, Priority $priority, EntityManagerInterface $manager): Response
     {
         $form = $this->createForm(PriorityType::class, $priority);
@@ -115,13 +117,14 @@ class PriorityController extends AbstractController
      * This method is used to delete a priority
      *
      * @param EntityManagerInterface $manager
-     * @param Task $task
+     * @param Priority $priority
      * @return Response
      */
-    #[Route('/priority/delete/{id}', name: 'app_priority_delete', methods: ['POST'])]
-    public function delete(EntityManagerInterface $manager, Task $task): Response
+    #[Route('/priority/delete/{id}', name: 'app_priority_delete', methods: ['GET', 'POST'])]
+    //#[Security("is_granted('ROLE_USER') and user === recipe.getUser()")]
+    public function delete(EntityManagerInterface $manager, Priority $priority): Response
     {
-        $manager->remove($task);
+        $manager->remove($priority);
         $manager->flush();
 
         $this->addFlash('success', 'La tâche a été supprimée avec succès');

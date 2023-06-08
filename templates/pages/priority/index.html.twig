@@ -5,6 +5,14 @@
     {% embed 'component/_header.html.twig' %}
         {% block header_title "Toutes les priorités" %}
         {% block header_action_list %}
+
+            {# read and display just one flash message type #}
+            {% for message in app.flashes('success')  %}
+                <div class="alert alert-success">
+                    {{ message }}
+                </div>
+            {% endfor %}
+
             <li>
                 <a href="{{ path('app_priority_new') }}" class="btn btn-white btn-dim btn-outline-light">
                     <span>Ajouter</span>
@@ -32,13 +40,13 @@
                     </td>
                     <td>{{ row.value }}</td>
                     <td>
-                        <a href="{{ path('app_priority_edit', {id: row.id}) }}" class="btn btn-outline-primary">
+                        <a href="{{ path('app_priority_edit', {id: row.id}) }}" onclick="return confirm('Vous êtes sur de vouloir éditer ?')" class="btn btn-outline-primary">
                             <span>editer</span>
                         </a>
                     </td>
 
                     <td>
-                        <a href="{{ path('app_priority_delete', {id: row.id}) }}" class="btn btn-outline-danger">
+                        <a href="{{ path('app_priority_delete', {id: row.id}) }}" onclick="return confirm('Vous êtes sur de vouloir supprimer ?')" class="btn btn-outline-danger">
                             <span>supprimer</span>
                         </a>
                     </td>

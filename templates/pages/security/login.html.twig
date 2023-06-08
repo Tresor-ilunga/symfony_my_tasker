@@ -3,21 +3,31 @@
 {% block title %}Login{% endblock %}
 
 {% block body %}
-    <h1>Login</h1>
+    <h2 class="nk-block-title">Connexion</h2>
     {% if error %}
         <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
 
     <form action="{{ path('security_login') }}" method="post">
-        <label for="username">Email:</label>
-        <input type="text" id="username" name="_username" value="{{ last_username }}">
+        <div class="nk-block-head">
+            <div class="nk-block-head-content">
+                {# <h5 class="nk-block-title fw-bolder">Bon retour parmi nous</h5> #}
+                <div class="nk-block-des"><p>connectez-vous pour continuer</p></div>
+            </div>
+        </div>
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="_password">
+        <div class="form-group">
+            <div class="form-group">
+                <label class="form-label" for="username">Email</label>
+                <input type="email" class="form-control" name="_username" id="username" {{ last_username }} required>
+            </div>
 
-        {# If you want to control the URL the user is redirected to on success
-    <input type="hidden" name="_target_path" value="/account"> #}
+            <div class="form-group">
+                <label class="form-label" for="password">Mot de passe</label>
+                <input type="password" class="form-control" name="_password" id="password" required>
+            </div>
 
-        <button type="submit">login</button>
+            <button class="btn btn-lg btn-primary btn-block">Se connecter</button>
+        </div>
     </form>
 {% endblock %}

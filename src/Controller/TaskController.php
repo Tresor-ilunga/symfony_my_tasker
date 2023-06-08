@@ -31,6 +31,7 @@ class TaskController extends AbstractController
      * @return Response
      */
     #[Route('/task', name: 'app_task', methods: ['GET', 'POST'])]
+    //#[IsGranted('ROLE_USER')]
     public function index(TaskRepository $repository, PaginatorInterface $paginator, Request $request): Response
     {
         return $this->render('pages/task/index.html.twig',
@@ -52,6 +53,7 @@ class TaskController extends AbstractController
      * @return Response
      */
     #[Route('/task/new', name: 'app_task_new', methods: ['GET', 'POST'])]
+    //#[IsGranted('ROLE_USER')]
     public function new(Request $request, EntityManagerInterface $manager): Response
     {
         $task = new Task();
@@ -85,6 +87,7 @@ class TaskController extends AbstractController
      * @return Response
      */
     #[Route('/task/edit/{id}', name: 'app_task_edit', methods: ['GET', 'POST'])]
+    //#[Security("is_granted('ROLE_USER') and user === task.getUser()")]
     public function edit(Task $task, EntityManagerInterface $manager, Request $request): Response
     {
         $form = $this->createForm(TaskType::class, $task);

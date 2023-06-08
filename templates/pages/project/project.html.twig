@@ -1,0 +1,46 @@
+{% extends 'layout/base.html.twig' %}
+{% block title "Projects" %}
+
+{% block header %}
+    {% embed 'component/_header.html.twig' %}
+        {% block header_title "Projects" %}
+        {% block header_action_list %}
+            <li>
+                <a href="" class="btn btn-white btn-dim btn-outline-light">
+                    <span>Ajouter</span>
+                   {# {{ 'plus' | icon }} #}
+                </a>
+            </li>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block content %}
+    {% embed 'component/_project.html.twig' with {_action: 'ajouter un projet'} %}
+        {% block list_card_table_head %}
+            <th>Lien</th>
+            <th>Description</th>
+            <th>&nbsp;</th>
+        {% endblock %}
+        {% block list_card_table_body %}
+            {% for row in data %}
+                <tr>
+                    <td>
+                        <a href="{{ row.url }}" target="_blank">
+                            {{ row.url | u.truncate(50, '...') }}
+                        </a>
+                    </td>
+                    <td>{{ row.description | u.truncate(100, '...') }}</td>
+                    <td class="tb-odr-action">
+                        <div class="tb-odr-btns d-none d-md-inline">
+                          {#  <a href="{{ path('app_link_show', {id: row.id}) }}" class="text-soft btn btn-icon btn-trigger" title="">
+                                {{ 'eye-alt-fill' | icon }}
+                            </a>
+                          #}
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

@@ -14,6 +14,11 @@ use PHPUnit\Framework\TestCase;
  */
 class TaskTest extends TestCase
 {
+    /**
+     * This method is called before each test.
+     *
+     * @return void
+     */
     public function testSetTitle(): void
     {
         $task = new Task();
@@ -22,6 +27,11 @@ class TaskTest extends TestCase
         $this->assertSame('title', $task->getTitle());
     }
 
+    /**
+     * This method is called before each test.
+     *
+     * @return void
+     */
     public function testSetDescription(): void
     {
         $task = new Task();
@@ -30,6 +40,11 @@ class TaskTest extends TestCase
         $this->assertSame('description', $task->getDescription());
     }
 
+    /**
+     * This method is called before each test.
+     *
+     * @return void
+     */
     public function testSetPriorities(): void
     {
         $task = new Task();
@@ -38,6 +53,11 @@ class TaskTest extends TestCase
         $this->assertSame('high', $task->getPriorities());
     }
 
+    /**
+     * This method is called before each test.
+     *
+     * @return void
+     */
     public function testSetState(): void
     {
         $task = new Task();

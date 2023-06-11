@@ -3,11 +3,14 @@
 namespace App\Entity;
 
 use App\Repository\ProjectsRepository;
+use DateTimeImmutable;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ProjectsRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 #[UniqueEntity('projectName')]
 class Projects
 {
@@ -30,13 +33,29 @@ class Projects
     #[Assert\NotNull()]
     private ?string $Team = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: "float")]
     #[Assert\NotNull()]
-    private ?int $Progress = null;
+    private ?float $Progress = null;
 
-    #[ORM\Column(length: 255)]
-    #[Assert\NotNull()]
-    private ?string $Deadline = null;
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
+    private ?DateTimeImmutable $deadline = null;
+
+    public function __construct()
+    {
+        $this->deadline = new DateTimeImmutable();
+    }
+
+    #[ORM\PrePersist]
+    public function prePersist(): void
+    {
+        $this->deadline = new DateTimeImmutable();
+    }
+
+    #[ORM\PreUpdate]
+    public function preUpdate(): void
+    {
+        $this->deadline = new DateTimeImmutable();
+    }
 
     public function getId(): ?int
     {
@@ -79,28 +98,33 @@ class Projects
         return $this;
     }
 
-    public function getProgress(): ?int
+    public function getProgress(): ?float
     {
         return $this->Progress;
     }
 
-    public function setProgress(int $Progress): self
+    public function setProgress(float $Progress): self
     {
         $this->Progress = $Progress;
 
         return $this;
     }
 
-    public function getDeadline(): ?string
+    public function getDeadline(): ?DateTimeImmutable
     {
-        return $this->Deadline;
+        return $this->deadline;
     }
 
-    public function setDeadline(string $Deadline): self
+    public function setDeadline(DateTimeImmutable $deadline): static
     {
-        $this->Deadline = $Deadline;
+        $this->deadline = $deadline;
 
         return $this;
     }
-    
+
+    public function __toString(): string
+    {
+        return $this->projectName;
+    }
+
 }

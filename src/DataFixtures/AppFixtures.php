@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\DataFixtures;
 
 use App\Entity\Priority;
+use App\Entity\Projects;
 use App\Entity\Task;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -80,6 +81,21 @@ class AppFixtures extends Fixture
             $tasks[] = $task;
             $manager->persist($task);
 
+        }
+
+        // Projects
+        $projects = [];
+
+        for ($i = 0; $i < 20; $i++)
+        {
+            $project = new Projects();
+            $project->setProjectName($this->faker->word())
+                ->setProjectLead($this->faker->name())
+                ->setTeam($this->faker->name())
+                ->setProgress($this->faker->numberBetween(0, 100));
+
+            $projects[] = $project;
+            $manager->persist($project);
         }
 
         $manager->flush();

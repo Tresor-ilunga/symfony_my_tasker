@@ -2,17 +2,17 @@
 
 namespace App\Entity;
 
-use App\Repository\ProjectsRepository;
+use App\Repository\ProjectRepository;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
-#[ORM\Entity(repositoryClass: ProjectsRepository::class)]
+#[ORM\Entity(repositoryClass: ProjectRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 #[UniqueEntity('projectName')]
-class Projects
+class Project
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -27,15 +27,15 @@ class Projects
     #[ORM\Column(length: 50)]
     #[Assert\NotNull()]
     #[Assert\Length(min: 1, max: 50)]
-    private ?string $ProjectLead = null;
+    private ?string $projectLead = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotNull()]
-    private ?string $Team = null;
+    private ?string $team = null;
 
     #[ORM\Column(type: "float")]
     #[Assert\NotNull()]
-    private ?float $Progress = null;
+    private ?float $progress = null;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private ?DateTimeImmutable $deadline = null;
@@ -76,36 +76,36 @@ class Projects
 
     public function getProjectLead(): ?string
     {
-        return $this->ProjectLead;
+        return $this->projectLead;
     }
 
-    public function setProjectLead(string $ProjectLead): self
+    public function setProjectLead(string $projectLead): self
     {
-        $this->ProjectLead = $ProjectLead;
+        $this->projectLead = $projectLead;
 
         return $this;
     }
 
     public function getTeam(): ?string
     {
-        return $this->Team;
+        return $this->team;
     }
 
-    public function setTeam(string $Team): self
+    public function setTeam(string $team): self
     {
-        $this->Team = $Team;
+        $this->team = $team;
 
         return $this;
     }
 
     public function getProgress(): ?float
     {
-        return $this->Progress;
+        return $this->progress;
     }
 
-    public function setProgress(float $Progress): self
+    public function setProgress(float $progress): self
     {
-        $this->Progress = $Progress;
+        $this->progress = $progress;
 
         return $this;
     }

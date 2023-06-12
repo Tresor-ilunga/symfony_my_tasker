@@ -1,14 +1,21 @@
 {% extends 'layout/base.html.twig' %}
-{% block title "Projects" %}
+{% block title "Project" %}
 
 {% block header %}
     {% embed 'component/_header.html.twig' %}
-        {% block header_title "Projects" %}
+        {% block header_title "Toutes les projets" %}
         {% block header_action_list %}
+
+            {# read and display just one flash message type #}
+            {% for message in app.flashes('success')  %}
+                <div class="alert alert-success">
+                    {{ message }}
+                </div>
+            {% endfor %}
+
             <li>
-                <a href="" class="btn btn-white btn-dim btn-outline-light">
+                <a href="{{ path('app_task_new') }}" class="btn btn-white btn-dim btn-outline-light">
                     <span>Ajouter</span>
-                   {# {{ 'plus' | icon }} #}
                 </a>
             </li>
         {% endblock %}
@@ -16,27 +23,44 @@
 {% endblock %}
 
 {% block content %}
-    {% embed 'component/_project.html.twig' with {_action: 'ajouter un projet'} %}
+    {% embed 'component/_project.html.twig' with {_action: 'ajouter une taches', _path: path('app_task_new')} %}
         {% block list_card_table_head %}
-            <th>Lien</th>
-            <th>Description</th>
+            <th>Project Name</th>
+            <th>Project Lead</th>
+            <th>Team</th>
+            <th>Progress</th>
+            <th>Edition</th>
+            <th>Suppression</th>
             <th>&nbsp;</th>
         {% endblock %}
         {% block list_card_table_body %}
-            {% for row in data %}
+            {% for row in project %}
                 <tr>
                     <td>
-                        <a href="{{ row.url }}" target="_blank">
-                            {{ row.url | u.truncate(50, '...') }}
+                        <a href="#" target="_blank">
+
+                        </a>
+                        {{ row.projectName }}
+                    </td>
+                    <td>{{ row.projectLead | u.truncate(100, '...') }}</td>
+                    <td>{{ row.team }}</td>
+                    <td>{{ row.progress }}</td>
+                    <td>
+                        <a href="#" onclick="return confirm('Vous êtes sur de vouloir éditer ?')" class="btn btn-outline-primary">
+                            <span>editer</span>
                         </a>
                     </td>
-                    <td>{{ row.description | u.truncate(100, '...') }}</td>
+
+                    <td>
+                        <a href="#" onclick="return confirm('Vous êtes sur de vouloir supprimer ?')" class="btn btn-outline-danger">
+                            <span>supprimer</span>
+                        </a>
+                    </td>
                     <td class="tb-odr-action">
                         <div class="tb-odr-btns d-none d-md-inline">
-                          {#  <a href="{{ path('app_link_show', {id: row.id}) }}" class="text-soft btn btn-icon btn-trigger" title="">
-                                {{ 'eye-alt-fill' | icon }}
-                            </a>
-                          #}
+                            {#{ <a href="{{ path('app_task_show', {id: row.id}) }}" class="text-soft btn btn-icon btn-trigger" title="">
+                              { 'eye-alt-fill' | icon }} voir
+                            </a>#}
                         </div>
                     </td>
                 </tr>

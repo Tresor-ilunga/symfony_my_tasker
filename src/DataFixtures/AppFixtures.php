@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\DataFixtures;
 
 use App\Entity\Priority;
-use App\Entity\Projects;
+use App\Entity\Project;
 use App\Entity\Task;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -83,12 +83,12 @@ class AppFixtures extends Fixture
 
         }
 
-        // Projects
+        // Project
         $projects = [];
 
         for ($i = 0; $i < 20; $i++)
         {
-            $project = new Projects();
+            $project = new Project();
             $project->setProjectName($this->faker->word())
                 ->setProjectLead($this->faker->name())
                 ->setTeam($this->faker->name())

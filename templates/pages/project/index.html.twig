@@ -14,7 +14,7 @@
             {% endfor %}
 
             <li>
-                <a href="{{ path('app_task_new') }}" class="btn btn-white btn-dim btn-outline-light">
+                <a href="{{ path('app_project_new') }}" class="btn btn-white btn-dim btn-outline-light">
                     <span>Ajouter</span>
                 </a>
             </li>
@@ -23,7 +23,7 @@
 {% endblock %}
 
 {% block content %}
-    {% embed 'component/_project.html.twig' with {_action: 'ajouter une taches', _path: path('app_task_new')} %}
+    {% embed 'component/_project.html.twig' with {_action: 'ajouter une taches', _path: path('app_project_new')} %}
         {% block list_card_table_head %}
             <th>Project Name</th>
             <th>Project Lead</th>
@@ -46,13 +46,13 @@
                     <td>{{ row.team }}</td>
                     <td>{{ row.progress }}</td>
                     <td>
-                        <a href="#" onclick="return confirm('Vous êtes sur de vouloir éditer ?')" class="btn btn-outline-primary">
+                        <a href="{{ path('app_project_edit', {id: row.id}) }}" onclick="return confirm('Vous êtes sur de vouloir éditer ?')" class="btn btn-outline-primary">
                             <span>editer</span>
                         </a>
                     </td>
 
                     <td>
-                        <a href="#" onclick="return confirm('Vous êtes sur de vouloir supprimer ?')" class="btn btn-outline-danger">
+                        <a href="{{ path('app_project_delete', {id: row.id}) }}" onclick="return confirm('Vous êtes sur de vouloir supprimer ?')" class="btn btn-outline-danger">
                             <span>supprimer</span>
                         </a>
                     </td>

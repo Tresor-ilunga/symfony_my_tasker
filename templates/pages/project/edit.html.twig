@@ -1,0 +1,26 @@
+{% extends 'layout/base.html.twig' %}
+{% block title "Modification du projet" %}
+
+{% block header %}
+    {% embed 'component/_header.html.twig' %}
+        {% block header_title "Modification du projet" %}
+        {% block header_action_list %}
+            <li>
+                <a href="{{ path('app_task') }}" class="btn btn-white btn-dim btn-outline-light">
+                    <span>toutes les projets</span>
+                </a>
+            </li>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block content %}
+    {% embed "component/_card.html.twig" %}
+        {% block card_body %}
+            {{ form_start(form) }}
+            {{ form_rest(form) }}
+
+            {{ form_end(form) }}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

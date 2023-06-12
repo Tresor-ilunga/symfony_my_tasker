@@ -31,8 +31,8 @@
             </div>
             <div class="card-inner d-flex justify-content-center">
                 {% block list_card_pagination %}
-                    {% if task is defined %}
-                        {{ knp_pagination_render(task, 'component/_pagination.html.twig') }}
+                    {% if project is defined %}
+                        {{ knp_pagination_render(project, 'component/_pagination.html.twig') }}
                     {% endif %}
                 {% endblock %}
             </div>

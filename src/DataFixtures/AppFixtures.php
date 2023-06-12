@@ -92,7 +92,8 @@ class AppFixtures extends Fixture
             $project->setProjectName($this->faker->word())
                 ->setProjectLead($this->faker->name())
                 ->setTeam($this->faker->name())
-                ->setProgress($this->faker->numberBetween(0, 100));
+                ->setProgress($this->faker->numberBetween(0, 100))
+                ->setUser($users[mt_rand(0, count($users) - 1)]);
 
             $projects[] = $project;
             $manager->persist($project);

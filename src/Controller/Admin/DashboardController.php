@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Admin;
 
 use App\Entity\Priority;
+use App\Entity\Project;
 use App\Entity\Task;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -58,5 +59,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Utilisateurs', 'fas fa-user', User::class);
         yield MenuItem::linkToCrud('Priorité', 'fas fa-bars-progress', Priority::class);
         yield MenuItem::linkToCrud('Tâches', 'fas fa-bars-progress', Task::class);
+        yield MenuItem::linkToCrud('Project', 'fas fa-bars-progress', Project::class);
     }
 }

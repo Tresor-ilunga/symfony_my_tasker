@@ -28,7 +28,7 @@ class ProjectController extends AbstractController
         return $this->render('pages/project/index.html.twig',
             parameters: [
                 'project' => $paginator->paginate(
-                    target: $repository->findAll(), //['user' => $this->getUser()]
+                    target: $repository->findBy(['user' => $this->getUser()]),
                     page: $request->query->getInt('page', 1),
                     limit: 10
                 )
@@ -44,6 +44,10 @@ class ProjectController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $project = $form->getData();
+            $project->setUser($this->getUser());
+
             $manager->persist($project);
             $manager->flush();
 
@@ -64,6 +68,9 @@ class ProjectController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $project = $form->getData();
+
             $manager->persist($project);
             $manager->flush();
 
